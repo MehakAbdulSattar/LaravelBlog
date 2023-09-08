@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\CommentController;
+use App\Http\Controllers\GuestController;
 
 /*
 |--------------------------------------------------------------------------
@@ -63,4 +65,7 @@ Route::prefix('post')->middleware(['auth'])->group (function()
 
 
 });
+
+Route::post('/comments', 'App\Http\Controllers\CommentController@storeComment')->name('comments.storeComment');
+
 

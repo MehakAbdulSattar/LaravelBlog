@@ -61,6 +61,40 @@ In order to ensure that the Laravel community is welcoming to all, please review
 
 If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
 
+
+
+
+
+Features
+User:
+Create posts with titles, images, and descriptions after authentication.
+
+Guest:
+View posts without authentication.
+Leave comments on posts without authentication.
+
+Admin:
+Delete posts and comments after authentication.
+
+
+Getting Started
+Prerequisites
+
+Before you begin, ensure you have met the following requirements:
+Laravel and its dependencies are installed.
+A database (postgresql) connection is configured in your Laravel project.
+Composer is installed on your system.
+
+Directory Structure:
+app/ - Contains application logic and models.
+config/ - Contains configuration files.
+database/ - Contains database migrations and seeders.
+public/ - Contains publicly accessible assets.
+resources/ - Contains views and assets that need compilation.
+routes/ - Contains route definitions.
+storage/ - Contains storage-related files.
+vendor/ - Contains Composer dependencies.
+
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).

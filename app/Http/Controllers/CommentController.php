@@ -26,8 +26,6 @@ class CommentController extends Controller
         return redirect()->route('post.index')->with('success', 'Comment added successfully.');
     }
 
-    // app/Http/Controllers/CommentController.php
-
     public function destroy(Comment $comment)
     {
         // Check if the user is an admin
@@ -45,6 +43,17 @@ class CommentController extends Controller
 
         return view('comments.index', compact('comments'));
     }
+    public function storeComment(Request $request)
+    {
+        Comment::create([
+            'post_id' => $request->post_id,
+            'guest_name' => $request->guest_name,
+            'body' => $request->body,
+        ]);
+
+        return back()->with('success', 'Comment submitted successfully.');
+    }
+
 
 
 }
