@@ -28,18 +28,30 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
+    protected $hidden = ['password', 'remember_token',];
 
     /**
      * The attributes that should be cast.
      *
      * @var array<string, string>
      */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-        'password' => 'hashed',
-    ];
+    protected $casts = ['email_verified_at' => 'datetime','password' => 'hashed',];
+
+
+    public function comments()
+    {
+        return $this->belongsToMany(Comment::class);
+    }
+
+    public function posts()
+    {
+        return $this->belongsToMany(Post::class);
+    }
+
+
+    public function isAdmin()
+    {
+        return $this->role === 'admin'; // Assuming 'admin' is the role for admins
+    }
+
 }
