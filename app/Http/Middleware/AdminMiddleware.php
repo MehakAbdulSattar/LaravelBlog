@@ -35,7 +35,7 @@ class AdminMiddleware
         {
              // If the user is not an admin or not authenticated,
             // redirect to the login page with an error message
-            return redirect('login')->with('status', "Login Yourself");
+            return redirect('home')->with('status', "Login Yourself");
         }
     }
 }

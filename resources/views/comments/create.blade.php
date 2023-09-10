@@ -1,8 +1,9 @@
-<!-- resources/views/comments/create.blade.php -->
-<form action="{{ route('comments.store') }}" method="POST">
+<!-- resources/views/includes/comment_form.blade.php -->
+<form action="{{ route('comments.store', $post) }}" method="POST" class="mt-3">
     @csrf
-    <input type="text" name="guest_name" placeholder="Your Name">
-    <textarea name="body" placeholder="Your Comment"></textarea>
     <input type="hidden" name="post_id" value="{{ $post->id }}">
-    <button type="submit">Submit Comment</button>
+    <div class="form-group">
+        <input type="text" name="text" class="form-control" placeholder="Add a comment">
+    </div>
+    <button type="submit" class="btn btn-primary">Add Comment</button>
 </form>

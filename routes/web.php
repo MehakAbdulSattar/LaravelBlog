@@ -22,7 +22,7 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('home', [App\Http\Controllers\HomeController::class, 'index'])->middleware('auth')->name('home');
 
 
 
@@ -45,10 +45,8 @@ Route::prefix('post')->middleware(['auth'])->group (function()
     Route::post('/store', 'App\Http\Controllers\PostController@store')->name('post.store');
 
     Route::get('/all', 'App\Http\Controllers\PostController@index')->name('post.index');
-
-    Route::post('/post/comments', 'App\Http\Controllers\CommentController@store')->name('comments.store');
-
-    // Route::get('/update/{post}', 'App\Http\Controllers\PostController@update')->name('post.edit');
+    
+   
 
     // Correct route definition
     //Route::get('/post', [PostController::class, 'index']);
@@ -57,7 +55,7 @@ Route::prefix('post')->middleware(['auth'])->group (function()
     //Route::get('/post', [Post::class, 'index']);
 
     // Routes for deleting posts
-    Route::delete('/posts/{post}', 'App\Http\Controllers\PostController@destroy')->name('posts.destroy');
+    Route::delete('{post}', 'App\Http\Controllers\PostController@destroy')->name('post.destroy');
 
     // Routes for deleting comments
     Route::delete('/comments/{comment}', 'App\Http\Controllers\CommentController@destroy')->name('comments.destroy');
@@ -65,7 +63,8 @@ Route::prefix('post')->middleware(['auth'])->group (function()
 
 
 });
-
-Route::post('/comments', 'App\Http\Controllers\CommentController@storeComment')->name('comments.storeComment');
+Route::get('post/edit/{post}', 'App\Http\Controllers\PostController@edit')->name('post.edit');
+Route::put('post/update/{post}', 'App\Http\Controllers\PostController@update')->name('post.update');
+Route::post('/comments', 'App\Http\Controllers\CommentController@store')->name('comments.store');
 
 

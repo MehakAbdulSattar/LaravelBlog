@@ -2,6 +2,8 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PostController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -17,3 +19,11 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::prefix('post')->middleware('auth:api')->group(function () {
+    Route::get('/all', 'App\Http\Controllers\API\PostController@index');
+    Route::post('/store', 'App\Http\Controllers\API\PostController@store');
+    Route::put('/{post}', 'App\Http\Controllers\API\PostController@update');
+    Route::delete('/{post}', 'App\Http\Controllers\API\PostController@destroy');
+});
+

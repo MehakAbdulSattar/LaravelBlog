@@ -40,6 +40,10 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'api' => [
+            'driver' => 'passport', // Use 'passport' for Laravel Passport or 'sanctum' for Laravel Sanctum.
+            'provider' => 'users',
+        ],
     ],
 
     /*

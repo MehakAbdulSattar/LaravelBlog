@@ -7,7 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Comment extends Model
 {
-    use HasFactory;
+    use HasFactory; 
+    protected $fillable = ['text', 'user_id', 'post_id'];
+
     public function users()
     {
         return $this->belongsToMany(User::class);
@@ -16,5 +18,5 @@ class Comment extends Model
     public function posts()
     {
         return $this->belongsToMany(Post::class);
-    }
+    }    
 }

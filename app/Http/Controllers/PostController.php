@@ -41,10 +41,11 @@ class PostController extends Controller
             'title' => $request->input('title'),
             'description' => $request->input('description'),
             'image' => $imagePath,
+            'user_id' => auth()->user()->id,
         ]);
 
         // Redirect to a success page or return a response
-        return redirect()->route('post  .index')->with('success', 'Post created successfully.');
+        return redirect()->route('post.index')->with('success', 'Post created successfully.');
     }
     public function index()
     {
@@ -57,38 +58,59 @@ class PostController extends Controller
 
     // app/Http/Controllers/PostController.php
 
-    // public function update(Request $request, Post $post)
-    // {
-    //     // Validate the request data
-    //     $request->validate([
-    //         'title' => 'required|max:255',
-    //         'description' => 'required',
-    //         // Add validation rules for other attributes here
-    //     ]);
+    public function edit(Request $request, Post $post)
+    {
+        $this->authorize('update', $post);
 
-    //     // Update the post with the new data
-    //     $post->update([
-    //         'title' => $request->input('title'),
-    //         'description' => $request->input('description'),
-    //         // Update other attributes here
-    //     ]);
+        // Redirect to the post's show page or a success page
+        return view('post.edit', compact('post'));
+    }
 
-    //     // Redirect to the post's show page or a success page
-    //     return redirect()->route('post.show', $post)->with('success', 'Post updated successfully.');
-    // }
+    public function update(Request $request, Post $post)
+    {   
+
+        $this->authorize('update', $post);
+
+        $request->validate([
+            'title' => 'required|max:255',
+            'description' => 'required',
+            'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // Add image validation rules here
+            // Add validation rules for other attributes here
+        ]);
+
+
+
+        // Update the post data
+        $post->title = $request->input('title');
+        $post->description = $request->input('description');
+
+        // Handle image upload and storage here
+       if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('uploads', 'public');
+        } else {
+            $imagePath = null;
+        }
+
+        $post->image=$imagePath;
+        // Save the updated post
+        $post->save();
+
+        // Redirect to the post's show page or a success page
+        return redirect()->route('post.index');
+
+    }
 
 
     // app/Http/Controllers/PostController.php
 
     public function destroy(Post $post)
     {
-        // Check if the user is an admin
-        if (auth()->user()->isAdmin()) {
-            $post->delete();
-            return redirect('/post')->with('success', 'Post deleted successfully.');
-        } else {
-            return redirect('/post')->with('error', 'Access Denied. You are not an admin.');
-        }
+       $post->comments()->delete();
+
+    // Delete the post
+    $post->delete();
+
+    return redirect()->route('post.index');
     }
 
 }
